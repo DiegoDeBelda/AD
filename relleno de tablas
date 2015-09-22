@@ -1,0 +1,11 @@
+insert into articulo (categoria, id, nombre, precio) VALUES ('florares', 1, 'geranio', 5);
+insert into categoria (id, nombre) VALUES (1, 'florales')
+insert into articulo (nombre, categoria, precio) values ('articulo 1', 1, 1)
+insert into articulo (nombre, categoria, precio) values ('articulo 2', 2, 2)
+insert into articulo (nombre, categoria, precio) values ('articulo 3', 3, 3.5)
+
+--------------------------
+
+insert into categoria (nombre) values ('categoria 1')
+insert into categoria (nombre) values ('categoria 2')
+insert into categoria (nombre) values ('categoria 3')
