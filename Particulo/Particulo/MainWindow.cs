@@ -4,25 +4,23 @@ using MySql.Data.MySqlClient;
 
 public partial class MainWindow: Gtk.Window
 {	
-	public MainWindow (): base (Gtk.WindowType.Toplevel)
-	{
-		Build ();
-		Console.WriteLine ("Main Windows ctor.");
-		//crear conexion---------------------------------------------------------
-		MySqlConnection mysqlconection = new MySqlConnection(
-			"Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
-		//------------------------------------------------------------------------
-		mysqlconection.Open ();
-		//sentencias--------------------------------------------------------------
-		MySqlCommand mysqlcomand = mysqlconection.CreateCommand ();
-		mysqlcomand.CommandText = "select id, nombre from articulo";
+	public MySqlConnection EstablecerConexion(){
 
+		Console.WriteLine ("Main Windows ctor.");
+
+		//crear conexion---------------------------------------------------------
+		MySqlConnection mysqlconection = new MySqlConnection("Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
+		mysqlconection.Open ();
+		return mysqlconection;
+	}
+
+	public ListStore rellenado(MySqlConnection a){
+
+		//sentencias--------------------------------------------------------------
+		MySqlCommand mysqlcomand =a.CreateCommand ();
+		mysqlcomand.CommandText = "select id, nombre from articulo";
 		MySqlDataReader mysqldatareader = mysqlcomand.ExecuteReader ();
 
-//		while (mysqldatareader.Read()) {
-//			Console.WriteLine ("id={0} nombre={1}", mysqldatareader [0], mysqldatareader [1]);
-//		
-//		}
 
 
 		TreeView.AppendColumn ("id", new CellRendererText(), "text", 0);
@@ -31,22 +29,32 @@ public partial class MainWindow: Gtk.Window
 		//modelo:
 
 		ListStore listStore = new ListStore(typeof(String), typeof(String));
-//		listStore.AppendValues ("1", "nombre del primero");
-//		listStore.AppendValues ("2", "nombre del segundo");
 
 		String[] values = new String[2];
 		while (mysqldatareader.Read()) {
 			values [0] =  mysqldatareader [0].ToString();
 			values [1] = mysqldatareader [1].ToString();
 			listStore.AppendValues (values);
-		
-		}
-		//TO DO rellenar List Store
-		TreeView.Model = listStore;
 
-		//cerrar conexion
+		}
+		//cerrar la conexion
 		mysqldatareader.Close ();
-		mysqlconection.Close ();
+		a.Close();
+
+
+		return listStore;
+
+	}
+
+
+
+	public MainWindow (): base (Gtk.WindowType.Toplevel)
+	{
+		Build ();
+			//TO DO rellenar List Store
+		TreeView.Model = rellenado(EstablecerConexion());
+
+
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
