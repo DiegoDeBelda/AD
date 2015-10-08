@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using Gtk;
 using System.Data;
 using Particulo;
+using System.Collections;
 
 public partial class MainWindow: Gtk.Window
 {	
 	public IDbConnection EstablecerConexion(){
-
-
 		Console.WriteLine ("Main Windows ctor.");
-
 		IDbConnection dbconection = APP.Instance.Dbconection;
 		return dbconection;
 	}
@@ -30,19 +28,29 @@ public partial class MainWindow: Gtk.Window
 //		TreeView.AppendColumn ("nombre", new CellRendererText (), "text", 1);
 
 		String[] ColumNames = getColumnames (datareader);
+		CellRendererText cellrenderertext = new CellRendererText();
 		for (int i=0; i<ColumNames.Length; i++) {
-			TreeView.AppendColumn (ColumNames [i], new CellRendererText (), "text", i);
+			int column = i;
+			//TreeView.AppendColumn (ColumNames [i], new CellRendererText (), "text", i);
+			TreeView.AppendColumn (ColumNames [i], cellrenderertext,
+			         delegate(TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model,TreeIter iter) {
+						
+						IList row = (IList)tree_model.GetValue(iter, 0);
+						cellrenderertext.Text=row[column].ToString();
+					
+
+						});
 		}
 
 		//modelo:
 
 //		ListStore listStore = new ListStore(typeof(String), typeof(String));
-		Type[] types = getTypes (datareader.FieldCount);
-		ListStore listStore = new ListStore(types);
+		//Type[] types = getTypes (datareader.FieldCount);
+		ListStore listStore = new ListStore(typeof(IList));
 
 	
 		while (datareader.Read()) {
-			string[] values = getValues(datareader);
+			IList values = getValues(datareader);
 			listStore.AppendValues (values);
 		}
 
