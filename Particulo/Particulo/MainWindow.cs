@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
 using Gtk;
-using MySql.Data.MySqlClient;
 using System.Data;
+using Particulo;
 
 public partial class MainWindow: Gtk.Window
 {	
 	public IDbConnection EstablecerConexion(){
 
+
 		Console.WriteLine ("Main Windows ctor.");
 
-		//crear conexion---------------------------------------------------------
-		IDbConnection dbconection = new MySqlConnection("Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
-		dbconection.Open ();
+		IDbConnection dbconection = APP.Instance.Dbconection;
 		return dbconection;
 	}
 
