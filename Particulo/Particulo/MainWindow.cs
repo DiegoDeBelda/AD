@@ -2,34 +2,35 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 public partial class MainWindow: Gtk.Window
 {	
-	public MySqlConnection EstablecerConexion(){
+	public IDbConnection EstablecerConexion(){
 
 		Console.WriteLine ("Main Windows ctor.");
 
 		//crear conexion---------------------------------------------------------
-		MySqlConnection mysqlconection = new MySqlConnection("Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
-		mysqlconection.Open ();
-		return mysqlconection;
+		IDbConnection dbconection = new MySqlConnection("Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
+		dbconection.Open ();
+		return dbconection;
 	}
 
 
 
-	public ListStore rellenado(MySqlConnection a){
+	public ListStore rellenado(IDbConnection a){
 
 		//sentencias--------------------------------------------------------------
-		MySqlCommand mysqlcomand =a.CreateCommand ();
-		mysqlcomand.CommandText = "select * from articulo";
-		MySqlDataReader mysqldatareader = mysqlcomand.ExecuteReader ();
+		IDbCommand dbcomand =a.CreateCommand ();
+		dbcomand.CommandText = "select * from articulo";
+		IDataReader datareader = dbcomand.ExecuteReader ();
 
 
 
 //		TreeView.AppendColumn ("id", new CellRendererText(), "text", 0);
 //		TreeView.AppendColumn ("nombre", new CellRendererText (), "text", 1);
 
-		String[] ColumNames = getColumnames (mysqldatareader);
+		String[] ColumNames = getColumnames (datareader);
 		for (int i=0; i<ColumNames.Length; i++) {
 			TreeView.AppendColumn (ColumNames [i], new CellRendererText (), "text", i);
 		}
@@ -37,17 +38,17 @@ public partial class MainWindow: Gtk.Window
 		//modelo:
 
 //		ListStore listStore = new ListStore(typeof(String), typeof(String));
-		Type[] types = getTypes (mysqldatareader.FieldCount);
+		Type[] types = getTypes (datareader.FieldCount);
 		ListStore listStore = new ListStore(types);
 
 	
-		while (mysqldatareader.Read()) {
-			string[] values = getValues(mysqldatareader);
+		while (datareader.Read()) {
+			string[] values = getValues(datareader);
 			listStore.AppendValues (values);
 		}
 
 		//cerrar la conexion
-		mysqldatareader.Close ();
+		datareader.Close ();
 		a.Close();
 
 
@@ -55,11 +56,11 @@ public partial class MainWindow: Gtk.Window
 
 	}
 
-	private String[] getColumnames (MySqlDataReader mysqldatareader){
+	private String[] getColumnames (IDataReader datareader){
 		List<string> columnames = new List<string>();
-		int count = mysqldatareader.FieldCount;
+		int count = datareader.FieldCount;
 		for (int i=0; i<count; i++) {
-			columnames.Add (mysqldatareader.GetName (i));
+			columnames.Add (datareader.GetName (i));
 		}
 		return columnames.ToArray ();
 	
@@ -74,11 +75,11 @@ public partial class MainWindow: Gtk.Window
 		return types.ToArray ();
 	}
 
-	private string[] getValues(MySqlDataReader mysqldatareader){
-		int count = mysqldatareader.FieldCount;
+	private string[] getValues(IDataReader datareader){
+		int count = datareader.FieldCount;
 		List<string> values = new List<string> ();
 		for (int i=0; i<count; i++) {
-			values.Add (mysqldatareader [i].ToString ());
+			values.Add (datareader [i].ToString ());
 		}
 		return values.ToArray ();
 	}
