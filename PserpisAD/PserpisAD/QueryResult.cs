@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gtk;
 
-namespace Particulo
+namespace SerpisAD
 {
 	public class QueryResult
 	{

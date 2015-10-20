@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace Particulo
+namespace SerpisAD
 {
 	public class APP
 	{
@@ -16,13 +16,15 @@ namespace Particulo
 		private IDbConnection dbconection;
 		public IDbConnection Dbconection {
 			get { 
-				if (dbconection == null) {
-					dbconection = new MySqlConnection (
-						"Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
-					dbconection.Open ();
-				}
 				return dbconection;
+//				if (dbconection == null) {
+//					dbconection = new MySqlConnection (
+//						"Database=dbprueba;Data Source=localhost;User id=root; Password=sistemas");
+//					dbconection.Open ();
+//				}
+
 			}
+			set{ dbconection = value;}
 		}
 
 

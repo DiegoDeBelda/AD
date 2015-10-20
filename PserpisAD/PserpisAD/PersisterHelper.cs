@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using Gtk;
 
-namespace Particulo
+namespace SerpisAD
 {
 	public class PersisterHelper
 	{

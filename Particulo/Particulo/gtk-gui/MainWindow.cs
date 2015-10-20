@@ -6,7 +6,7 @@ public partial class MainWindow
 	private global::Gtk.VBox vbox2;
 	private global::Gtk.Toolbar toolbar2;
 	private global::Gtk.HBox hbox1;
-	private global::Gtk.Label int;
+	private global::Gtk.Label label;
 	private global::Gtk.Entry entrySelect;
 	private global::Gtk.Button button1;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
@@ -42,11 +42,11 @@ public partial class MainWindow
 		this.hbox1.Name = "hbox1";
 		this.hbox1.Spacing = 6;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.int = new global::Gtk.Label ();
-		this.int.Name = "label1";
-		this.int.LabelProp = global::Mono.Unix.Catalog.GetString ("label1");
-		this.hbox1.Add (this.int);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.int]));
+		this.label = new global::Gtk.Label ();
+		this.label.Name = "label";
+		this.label.LabelProp = global::Mono.Unix.Catalog.GetString ("int.");
+		this.hbox1.Add (this.label);
+		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.label]));
 		w3.Position = 0;
 		w3.Expand = false;
 		w3.Fill = false;
@@ -62,6 +62,7 @@ public partial class MainWindow
 		// Container child hbox1.Gtk.Box+BoxChild
 		this.button1 = new global::Gtk.Button ();
 		this.button1.CanFocus = true;
+		this.button1.Events = ((global::Gdk.EventMask)(256));
 		this.button1.Name = "button1";
 		this.button1.UseStock = true;
 		this.button1.UseUnderline = true;
