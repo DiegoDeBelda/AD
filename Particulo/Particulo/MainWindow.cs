@@ -4,6 +4,7 @@ using Gtk;
 using System.Data;
 using SerpisAD;
 using System.Collections;
+using Particulo;
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -16,10 +17,11 @@ public partial class MainWindow: Gtk.Window
 	{
 
 		//creamos el objeto de la consulta con la query 
-		entrySelect.Text = consulta;
+		//entrySelect.Text = consulta;
 
-		QueryResult queryresult = PersisterHelper.Get (consulta);
+		QueryResult queryresult = PersisterHelper.Get ("select * from articulo");
 		TreeViewHelper.Fill (TreeView, queryresult);
+
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -27,5 +29,12 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit ();
 		a.RetVal = true;
 	}
+
+
+	protected void OnNewActionActivated (object sender, EventArgs e)
+	{
+		new ArticuloView ();
+	}
+
 }
 

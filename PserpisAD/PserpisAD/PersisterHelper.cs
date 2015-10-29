@@ -69,7 +69,7 @@ namespace SerpisAD
 
 			//cerramos la conexion
 			datareader.Close ();
-			dbconection.Close();
+
 			return queryresult;
 
 		}
