@@ -8,6 +8,8 @@ using Particulo;
 
 public partial class MainWindow: Gtk.Window
 {	
+	public QueryResult query;
+
 
 	public MainWindow() : base (Gtk.WindowType.Toplevel) {
 		Build ();
@@ -34,6 +36,12 @@ public partial class MainWindow: Gtk.Window
 	protected void OnNewActionActivated (object sender, EventArgs e)
 	{
 		new ArticuloView ();
+	}
+
+	protected void onRefreshActivatedated (object sender, EventArgs e)
+	{
+		QueryResult queryresult = PersisterHelper.Get ("select * from articulo");
+		TreeViewHelper.Fill (TreeView, queryresult);
 	}
 
 }

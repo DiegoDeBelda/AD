@@ -2,10 +2,12 @@ using System;
 using SerpisAD;
 using System.Collections;
 using Gtk;
+using System.Data;
 namespace Particulo
 {
 	public partial class ArticuloView : Gtk.Window
 	{
+
 		public ArticuloView () : 
 				base(Gtk.WindowType.Toplevel)
 		{
@@ -14,22 +16,46 @@ namespace Particulo
 			spinbutton1.Value = 1.5;
 
 			QueryResult query = PersisterHelper.Get ("Select * from categoria");
-			CellRendererText cellrenderertext = new CellRendererText ();
-			combobox1.PackStart (cellrenderertext, false);
+			ComboBoxHelper.Fill (combobox1, query);
+			//boton guardar
+			saveAction.Activated += delegate {save();};
 
-			combobox1.SetCellDataFunc (cellrenderertext, 
-			delegate(CellLayout cell_layout, CellRenderer cell, TreeModel tree_model, TreeIter iter) {
-				IList row =(IList)tree_model.GetValue(iter, 0);
-				cellrenderertext.Text=
-					String.Format("{0} - {1}",row[1].ToString(), row[1]);
-			});
 
-			ListStore liststore = new ListStore (typeof(IList));
-			foreach (IList row in query.Rows)
-				liststore.AppendValues (row);
 
-			combobox1.Model = liststore;
 
+
+
+
+		}
+		//boton guardar
+		private void save(){
+			IDbCommand dbcommand = APP.Instance.Dbconection.CreateCommand ();
+			dbcommand.CommandText = "insert into articulo (nombre, categoria, precio)" +
+				"values (@nombre, @categoria, @precio)";
+
+			string nombre = entry1.Text;
+			object categoria = GetId(combobox1);
+			decimal precio = Convert.ToDecimal (spinbutton1.Value);
+
+			addParameter (dbcommand, "nombre", nombre);
+			addParameter (dbcommand, "categoria", categoria);
+			addParameter (dbcommand, "precio", precio);
+		
+			dbcommand.ExecuteNonQuery ();
+		}
+
+		private static void addParameter(IDbCommand dbcommand,string name, object value){
+			IDbDataParameter dbdataparameter = dbcommand.CreateParameter ();
+			dbdataparameter.ParameterName = name;
+			dbdataparameter.Value = value;
+			dbcommand.Parameters.Add (dbdataparameter);
+		}
+
+		public static object GetId(ComboBox combobox){
+			TreeIter treeiter;
+			combobox.GetActiveIter (out treeiter);
+			IList row = (IList)combobox.Model.GetValue (treeiter, 0);
+			return row [0];
 		}
 	}
 }
