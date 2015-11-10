@@ -14,14 +14,15 @@
       <action id="newAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
+        <property name="ShortLabel" translatable="yes" />
         <property name="StockId">gtk-new</property>
         <signal name="Activated" handler="OnNewActionActivated" />
       </action>
       <action id="refreshAction">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes" />
+        <property name="Label" translatable="yes">_Actualizar</property>
+        <property name="ShortLabel" translatable="yes">_Actualizar</property>
         <property name="StockId">gtk-refresh</property>
-        <signal name="Activated" handler="onRefreshActivated" />
       </action>
     </action-group>
     <property name="MemberName" />
@@ -126,6 +127,7 @@
       <action id="saveAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
+        <property name="ShortLabel" translatable="yes" />
         <property name="StockId">gtk-save</property>
       </action>
     </action-group>

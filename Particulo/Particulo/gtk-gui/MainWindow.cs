@@ -21,8 +21,10 @@ public partial class MainWindow
 		this.UIManager = new global::Gtk.UIManager ();
 		global::Gtk.ActionGroup w1 = new global::Gtk.ActionGroup ("Default");
 		this.newAction = new global::Gtk.Action ("newAction", null, null, "gtk-new");
+		this.newAction.ShortLabel = "";
 		w1.Add (this.newAction, null);
-		this.refreshAction = new global::Gtk.Action ("refreshAction", null, null, "gtk-refresh");
+		this.refreshAction = new global::Gtk.Action ("refreshAction", global::Mono.Unix.Catalog.GetString ("_Actualizar"), null, "gtk-refresh");
+		this.refreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Actualizar");
 		w1.Add (this.refreshAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
@@ -104,6 +106,6 @@ public partial class MainWindow
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.newAction.Activated += new global::System.EventHandler (this.OnNewActionActivated);
-		this.refreshAction.Activated += new global::System.EventHandler (this.onRefreshActivated);
+
 	}
 }

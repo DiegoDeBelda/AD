@@ -10,6 +10,7 @@ namespace SerpisAD
 		public static void Fill (TreeView treeView, QueryResult queryresult)
 		{
 
+			removeAllColumns (treeView);
 			//creamos una variable auxiliar la cual usara el metodo visto en PersisterHelper.cs
 			String[] columNames = queryresult.ColumNames;
 
@@ -38,6 +39,11 @@ namespace SerpisAD
 
 
 
+		}
+		private static void removeAllColumns(TreeView treeView){
+			TreeViewColumn[] treeviewcolumns = treeView.Columns;
+			foreach (TreeViewColumn treeviewcolumn in treeviewcolumns)
+				treeView.RemoveColumn (treeviewcolumn);
 		}
 	}
 }
