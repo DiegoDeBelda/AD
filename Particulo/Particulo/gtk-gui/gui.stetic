@@ -14,7 +14,6 @@
       <action id="newAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
-        <property name="ShortLabel" translatable="yes" />
         <property name="StockId">gtk-new</property>
         <signal name="Activated" handler="OnNewActionActivated" />
       </action>
@@ -23,6 +22,11 @@
         <property name="Label" translatable="yes">_Actualizar</property>
         <property name="ShortLabel" translatable="yes">_Actualizar</property>
         <property name="StockId">gtk-refresh</property>
+      </action>
+      <action id="deleteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-delete</property>
       </action>
     </action-group>
     <property name="MemberName" />
@@ -40,6 +44,7 @@
             <node name="toolbar2" type="Toolbar">
               <node type="Toolitem" action="newAction" />
               <node type="Toolitem" action="refreshAction" />
+              <node type="Toolitem" action="deleteAction" />
             </node>
           </widget>
           <packing>
@@ -127,7 +132,6 @@
       <action id="saveAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes" />
-        <property name="ShortLabel" translatable="yes" />
         <property name="StockId">gtk-save</property>
       </action>
     </action-group>

@@ -20,7 +20,7 @@ namespace Particulo
 			//boton guardar
 			saveAction.Activated += delegate {save();};
 
-
+			Destroy ();
 
 
 
@@ -55,8 +55,11 @@ namespace Particulo
 			TreeIter treeiter;
 			combobox.GetActiveIter (out treeiter);
 			IList row = (IList)combobox.Model.GetValue (treeiter, 0);
+			if (row == null)
+				return null;
 			return row [0];
 		}
+
 	}
 }
 
