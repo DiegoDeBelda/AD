@@ -29,27 +29,32 @@ public partial class MainWindow: Gtk.Window
 		};
 
 		deleteAction.Activated += delegate{
-			object id = GetId(TreeView);
+			object id = TreeViewHelper.GetId(TreeView);
 			delete(id);
 		};
-	}
 
-	public static bool ConfirmDelete(Window window){
-		MessageDialog messageDialog = new MessageDialog (
-			window,
-			DialogFlags.DestroyWithParent,
-			MessageType.Question,
-			ButtonsType.YesNo,
-			"Estas seguro de eliminar esta fila?");
-		ResponseType response = (ResponseType)messageDialog.Run ();
-		messageDialog.Destroy ();
-		return response == ResponseType.Yes;
+		newAction.Activated += delegate {
+			new ArticuloView();
+		};
+		editAction.Activated += delegate{
+			object id = TreeViewHelper.GetId(TreeView);
+			new ArticuloView(id);
+
+		};
+		TreeView.Selection.Changed += delegate {
+			Console.WriteLine ("has seleccionado una fila");
+			deleteAction.Sensitive=TreeViewHelper.GetId(TreeView)!=null;
+		};
+		deleteAction.Sensitive = false;
 	}
+		
+
+
 
 	private void delete (object id){
 
-		if (ConfirmDelete(this)) {
-			QueryResult queryEliminar = PersisterHelper.Get ("delete from articulo where id=" + id);
+		if (WindowHelper.ConfirmDelete(this)) {
+			QueryResult queryEliminar = PersisterHelper.Get("delete from articulo where id=" + id);
 			Console.WriteLine ("linea borrada");
 		}
 	
@@ -59,13 +64,7 @@ public partial class MainWindow: Gtk.Window
 		QueryResult queryresult = PersisterHelper.Get ("select * from articulo");
 		TreeViewHelper.Fill (TreeView, queryresult);
 	}
-	public  object GetId(TreeView treeView){
-		TreeIter treeiter;
-		TreeView.Selection.GetSelected(out treeiter);
-		IList row = (IList) TreeView.Model.GetValue(treeiter, 0);
-		Console.WriteLine("click en delete id={0}", row[0]);
-		return row [0];
-	}
+
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
@@ -74,10 +73,7 @@ public partial class MainWindow: Gtk.Window
 	}
 
 
-	protected void OnNewActionActivated (object sender, EventArgs e)
-	{
-		new ArticuloView ();
-	}
+
 
 
 

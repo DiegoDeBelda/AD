@@ -45,6 +45,19 @@ namespace SerpisAD
 			foreach (TreeViewColumn treeviewcolumn in treeviewcolumns)
 				treeView.RemoveColumn (treeviewcolumn);
 		}
+		public static object GetId(TreeView treeView){
+			TreeIter treeiter;
+			if (!treeView.Selection.GetSelected (out treeiter)) {
+				return null;
+			}
+			IList row = (IList) treeView.Model.GetValue(treeiter, 0);
+			return row [0];
+
+		}
+		public static bool isSelected(TreeView treeview){
+			TreeIter treeIter;
+			return treeview.Selection.GetSelected (out treeIter);
+		}
 	}
 }
 

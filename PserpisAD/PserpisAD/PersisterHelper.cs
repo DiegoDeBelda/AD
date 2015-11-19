@@ -28,16 +28,14 @@ namespace SerpisAD
 			return values;
 		}
 
-//		private Type[] getTypes(int count){
-//			List<Type> types = new List<Type> ();
-//			for (int i=0; i<count; i++) {
-//				types.Add (typeof(string));
-//
-//			}
-//			return types.ToArray ();
+		
+//		public static void Delete(string selectText){
+//			IDbConnection dbconection = APP.Instance.Dbconection;
+//			IDbCommand dbcomand =dbconection.CreateCommand ();
+//			dbcomand.CommandText = selectText;
+//			//creamos un lector
+//			IDataReader datareader = dbcomand.ExecuteNonQuery (selectText);
 //		}
-//
-
 
 		public static QueryResult Get(string selectText){
 			//obtenemos la conexion y los comandos de la misma
