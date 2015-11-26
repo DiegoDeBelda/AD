@@ -11,12 +11,12 @@ namespace Particulo
 		public ArticuloPersister ()
 		{
 		}
-		private object id=null;
-		private object categoria=null;
-		private object nombre=null;
-		private decimal precio=0;
+		public static object id=null;
+		public static object categoria=null;
+		public static object nombre=null;
+		public static decimal precio=0;
 
-		public Articulo load(object id){
+		public static Articulo load(object id){
 			//pasar por parametro un id
 			//crear un objeto articulo y devolverlo con la lectura de datos
 			Articulo articulo = new Articulo();
@@ -47,7 +47,7 @@ namespace Particulo
 			return articulo;
 		}
 
-		public void Insert(Articulo onjecto){
+		public static void Insert(Articulo onjecto){
 			//en la clase articulo hay un objeto el cual recoge el return de load(id)
 			//este metodo tiene como parametro dicho objeto
 			IDbCommand dbcommand = APP.Instance.Dbconection.CreateCommand ();
@@ -62,7 +62,7 @@ namespace Particulo
 
 
 		}
-		public void update(Articulo onjecto){
+		public static void update(Articulo onjecto){
 			//en la clase articulo hay un objeto el cual recoge el return de load(id)
 			//este metodo tiene como parametro dicho objeto
 			IDbCommand dbcommand = APP.Instance.Dbconection.CreateCommand ();

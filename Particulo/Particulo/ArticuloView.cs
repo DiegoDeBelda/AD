@@ -18,14 +18,14 @@ namespace Particulo
 		public ArticuloView () : base(Gtk.WindowType.Toplevel)
 		{ 
 			init ();
-			save = ArticuloPersister.Insert(articulo);
+			save = ArticuloPersister.Insert;
 		}
 
 		public ArticuloView(object id) : base(WindowType.Toplevel){
 
 			articulo = ArticuloPersister.load(id);
 			init ();
-			save = ArticuloPersister.update(articulo);
+			save = ArticuloPersister.update;
 		}
 
 
