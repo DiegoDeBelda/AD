@@ -51,7 +51,7 @@ namespace Particulo
 			//en la clase articulo hay un objeto el cual recoge el return de load(id)
 			//este metodo tiene como parametro dicho objeto
 			IDbCommand dbcommand = APP.Instance.Dbconection.CreateCommand ();
-			dbcommand.CommandText = "insert into articulo (nombre, ategoria, precio)" +
+			dbcommand.CommandText = "insert into articulo (nombre, categoria, precio)" +
 				"values (@nombre, @categoria, @precio)";
 
 
@@ -80,13 +80,13 @@ namespace Particulo
 
 
 		}
-
+		/*
 		private static void addParameter(IDbCommand dbcommand,string name, object value){
 			IDbDataParameter dbdataparameter = dbcommand.CreateParameter ();
 			dbdataparameter.ParameterName = name;
 			dbdataparameter.Value = value;
 			dbcommand.Parameters.Add (dbdataparameter);
-		}
+		}*/
 
 	}
 }

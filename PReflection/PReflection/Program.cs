@@ -31,23 +31,35 @@ namespace PReflection
 
 			articulo.Nombre = "nombre 33";
 			articulo.Categoria = 2;
-			articulo.Precio = 3.5;
+			articulo.Precio = 3.5m;
 			showObject (articulo);
 			setValues (articulo, new object[] { 33L, "numero 33 modificado", decimal.Parse("33.33") });
-
+			showObject (articulo);
 		}
 		private static void showType(Type type){
 			Console.WriteLine ("type.Name={0} type.FullName={1} type.BaseType.Name={2}", type.Name, type.FullName, type.BaseType);
 			PropertyInfo[] propertyInfos= type.GetProperties();
-			foreach (PropertyInfo propertyInfo in propertyInfos)
-				Console.WriteLine ("propertyInfo.Name={0}", propertyInfo.Name);
+			foreach (PropertyInfo propertyInfo in propertyInfos) {
+				if (propertyInfo.IsDefined (typeof(IdAttribute), true))
+					Console.WriteLine ("{0} Decorado", propertyInfo.Name);
+				Console.WriteLine ("propertyInfo.Name={0} propertyInfo.PropertyType={1}",
+				                   propertyInfo.Name, propertyInfo.PropertyType);
+			}
 		}
 
 		private static void showObject(object obj){
 			Type type = obj.GetType ();
-			PropertyInfo[] propertyInfos= type.GetProperties();
-			foreach (PropertyInfo propertyInfo in propertyInfos){
+			if (!(obj is Attribute)) {
+				object[] attributes = type.GetCustomAttributes (true);
+				foreach (Attribute attribute in attributes)
+					showObject (attributes);
+			}
 
+			PropertyInfo[] propertyInfos= type.GetProperties();
+
+			foreach (PropertyInfo propertyInfo in propertyInfos){
+				if (propertyInfo.IsDefined (typeof(IdAttribute), true))
+					Console.WriteLine ("{0} Decorado", propertyInfo.Name);
 				Console.WriteLine("{0}={1}",propertyInfo.Name, propertyInfo.GetValue (obj, null));
 			}
 		}
@@ -57,14 +69,28 @@ namespace PReflection
 			Type type = obj.GetType ();
 			PropertyInfo[] propertyInfos= type.GetProperties();
 			foreach (PropertyInfo propertyInfo in propertyInfos) {
-				propertyInfo.SetValue(obj, values[index], null);
-				index++;
+				propertyInfo.SetValue(obj, values[index++], null);
+
 			}
 		}
 
+		public class IdAttribute : Attribute{
 
+
+		}
+
+		public class tableAttribute : Attribute{
+			string name;
+			public string Name {
+				get{ return name;}
+				set{ name = value;}
+			}
+
+
+		}
 		//clase interna Foo
 		public class Foo{
+
 			private object id;
 			public object Id{
 				get { return id;}
@@ -78,6 +104,7 @@ namespace PReflection
 				set{ name = value;}
 			}
 		}
+		[table(Name = "article")]
 		//copia de PArticulo.Articulo
 		public class Articulo
 		{
@@ -90,7 +117,7 @@ namespace PReflection
 			private object categoria;
 			private decimal precio;
 
-
+			[Id]
 			public object Id{
 				get{ return id;}
 				set{ id = value;}

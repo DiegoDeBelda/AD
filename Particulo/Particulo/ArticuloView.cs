@@ -17,6 +17,7 @@ namespace Particulo
 
 		public ArticuloView () : base(Gtk.WindowType.Toplevel)
 		{ 
+			articulo = new Articulo();
 			init ();
 			save = ArticuloPersister.Insert;
 		}
@@ -37,7 +38,12 @@ namespace Particulo
 			ComboBoxHelper.Fill (combobox1, query, articulo.Categoria);
 			spinbutton1.Value = Convert.ToDouble (articulo.Precio);
 
-			saveAction.Activated += delegate { save (articulo); };
+			saveAction.Activated += delegate { 
+				articulo.Nombre = entry1.Text;
+				articulo.Categoria=ComboBoxHelper.GetId(combobox1);
+				articulo.Precio=Convert.ToDecimal(spinbutton1.ValueAsInt);
+				save (articulo); 
+			};
 
 		}
 
