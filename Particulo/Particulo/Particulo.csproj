@@ -81,6 +81,7 @@
     <Compile Include="ComboBoxHelper.cs" />
     <Compile Include="Articulo.cs" />
     <Compile Include="ArticuloPersister.cs" />
+    <Compile Include="Persister.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

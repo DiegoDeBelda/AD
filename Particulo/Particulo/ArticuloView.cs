@@ -19,14 +19,14 @@ namespace Particulo
 		{ 
 			articulo = new Articulo();
 			init ();
-			save = ArticuloPersister.Insert;
+			save = Persister.Insert;
 		}
 
 		public ArticuloView(object id) : base(WindowType.Toplevel){
 
 			articulo = ArticuloPersister.load(id);
 			init ();
-			save = ArticuloPersister.update;
+			save = Persister.Update;
 		}
 
 
