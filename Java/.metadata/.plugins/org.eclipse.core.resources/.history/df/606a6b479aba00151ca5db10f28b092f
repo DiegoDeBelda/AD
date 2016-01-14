@@ -44,7 +44,7 @@ public class pruebaArticulo {
 		
 
 	}
-	/*public static void insercion(Connection connection) throws SQLException{
+	public static void insercion(Connection connection) throws SQLException{
 		
 		System.out.println("Introduzca nombre :");
 		String nombre=tcl.nextLine();
@@ -81,7 +81,7 @@ public class pruebaArticulo {
 		}
 		
 		
-	}*/
+	}
 	public static void actualizacion(Connection connection) throws SQLException{
 		long id = scanLong("	id: ");
 		Articulo articulo = scanArticulo();
@@ -101,9 +101,7 @@ public class pruebaArticulo {
 				}
 
 			}
-		}catch(Exception ex){
-			System.out.println(ex);
-		}finally{};
+		}
 		
 	}
 	public static void lecturaUnica(Connection connection)throws SQLException{
@@ -287,8 +285,6 @@ public class pruebaArticulo {
 			if(action == Action.Salir)break;
 			if(action == Action.Nuevo)nuevo(connection);
 			if(action == Action.Listar)lectura(connection);
-			if(action == Action.Editar)actualizacion(connection);
-			if(action == Action.Eliminar)borrado(connection);
 			
 		}
 		System.out.println("");
