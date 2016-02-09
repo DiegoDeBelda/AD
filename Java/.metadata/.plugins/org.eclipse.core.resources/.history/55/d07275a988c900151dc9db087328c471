@@ -44,7 +44,7 @@ public class Pruebaarticulo {
 				art.getId(), 
 				art.getNombre(), 
 				formatCategoria(art.getCategoria()), 
-				art.getPrecio()+"€"
+				art.getPrecio()
 		);
 		
 	}
